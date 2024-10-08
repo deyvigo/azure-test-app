@@ -133,6 +133,6 @@ describe('TEST EXAMPLES', () => {
     const numberOne = 2
     const numberTwo = 3
 
-    expect(numberOne + numberTwo).toBe(4)
+    expect(numberOne + numberTwo).toBe(5)
   })
 })
