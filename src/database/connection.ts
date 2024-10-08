@@ -37,3 +37,44 @@ db.serialize(() => {
     `
   )
 })
+
+export const deleteAllUsers = async () => {
+  return new Promise<void>((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION;', (err) => {
+        if (err) {
+          return reject(err)
+        }
+
+        db.run('DELETE FROM user;', (err) => {
+          if (err) {
+            return reject(err)
+          }
+
+          db.run('DELETE FROM sqlite_sequence WHERE name = "user";', (err) => {
+            if (err) {
+              return reject(err)
+            }
+
+            db.run('COMMIT;', (err) => {
+              if (err) {
+                reject(err)
+              }
+              resolve()
+            })
+          })
+        })
+      })
+    })
+  })
+}
+
+export const closeConnection = () => {
+  db.close((err) => {
+    if (err) {
+      console.error('Error closing connection', err)
+    } else {
+      console.log('Connection closed')
+    }
+  })
+}
