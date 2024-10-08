@@ -126,4 +126,11 @@ describe('UserController get by username test', () => {
     })
     expect(mockUserRepository.getByUsername).toHaveBeenCalledWith('testuser')
   })
+
+  it('sum two numbers', async () => {
+    const numberOne = 2
+    const numberTwo = 3
+
+    expect(numberOne + numberTwo).toBe(5)
+  })
 })
