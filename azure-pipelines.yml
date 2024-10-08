@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+      - tests
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '22.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+  displayName: 'Instala las dependencias necesarias'
+
+- script: |
+    npm run test
+  displayName: 'Ejecutando los tests'
+
