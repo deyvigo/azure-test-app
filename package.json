@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
     "tsc-init": "tsc --init",
     "dev": "nodemon ./src/app.ts",
     "build": "tsc",
@@ -28,6 +29,7 @@
     "@types/jest": "^29.5.13",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "nodemon": "^3.1.7",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
