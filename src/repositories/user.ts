@@ -1,10 +1,9 @@
 import { db } from '../database/connection'
 import { RunResult } from 'sqlite3'
 import { UserCreateDto, UserDTO, UserUpdateDto } from '../dto/user'
-import { IUserRepository } from '../interfaces/IUserRepository'
 
-export default class UserRepository implements IUserRepository {
-  insertOne = async (user: UserCreateDto) => {
+export default class UserRepository {
+  static insertOne = async (user: UserCreateDto) => {
     const query = 'INSERT INTO user (username, password, name, email) VALUES (?, ?, ?, ?);'
     return new Promise<RunResult>((resolve, reject) => {
       db.run(
@@ -21,7 +20,7 @@ export default class UserRepository implements IUserRepository {
     })
   }
 
-  getAll = async () => {
+  static getAll = async () => {
     const query = 'SELECT * FROM user;'
     return new Promise<UserDTO[]>((resolve, reject) => {
       db.all(
@@ -38,9 +37,9 @@ export default class UserRepository implements IUserRepository {
     })
   }
 
-  getByUsername = async (username: string) => {
+  static getByUsername = async (username: string) => {
     const query = 'SELECT * FROM user WHERE username = ?;'
-    return new Promise<UserDTO>((resolve, reject) => {
+    return new Promise<UserDTO | undefined>((resolve, reject) => {
       db.get(
         query,
         [username],
@@ -55,7 +54,7 @@ export default class UserRepository implements IUserRepository {
     })
   }
 
-  getById = async (id_user: string) => {
+  static getById = async (id_user: string) => {
     const query = 'SELECT * FROM user WHERE id_user = ?;'
     return new Promise<UserDTO>((resolve, reject) => {
       db.get(
@@ -72,7 +71,7 @@ export default class UserRepository implements IUserRepository {
     })
   }
 
-  updateById = async (id_user: string, user: UserUpdateDto) => {
+  static updateById = async (id_user: string, user: UserUpdateDto) => {
     const query = 'UPDATE user SET username = ?, name = ?, email = ? WHERE id_user = ?;'
     return new Promise<RunResult>((resolve, reject) => {
       db.run(

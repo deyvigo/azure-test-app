@@ -70,11 +70,13 @@ export const deleteAllUsers = async () => {
 }
 
 export const closeConnection = () => {
-  db.close((err) => {
-    if (err) {
-      console.error('Error closing connection', err)
-    } else {
-      console.log('Connection closed')
-    }
+  return new Promise<void>((resolve, reject) => {
+    db.close((err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
   })
 }

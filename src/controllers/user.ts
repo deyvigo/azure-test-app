@@ -7,10 +7,8 @@ export class UserController {
   static createUser = async (req: Request, res: Response) => {
     const { username, password, name, email }: UserCreateDto = req.body
 
-    const dbUser = new UserRepository()
-
     // verify if username is already taken
-    const userInDb = await dbUser.getByUsername(username)
+    const userInDb = await UserRepository.getByUsername(username)
     if (userInDb) {
       res.status(400).send({ message: 'Username already taken' })
       return
@@ -18,20 +16,18 @@ export class UserController {
 
     const hashedPassword = await bcrypt.hash(password, 10)
     const user: UserCreateDto = { username, password: hashedPassword, name, email }
-    const response = await dbUser.insertOne(user)
+    const response = await UserRepository.insertOne(user)
     res.send(response)
   }
 
   static getAllUsers = async (req: Request, res: Response) => {
-    const dbUser = new UserRepository()
-    const response = await dbUser.getAll()
+    const response = await UserRepository.getAll()
     res.send(response)
   }
 
   static getUserByUsername = async (req: Request, res: Response) => {
     const { username } = req.params
-    const dbUser = new UserRepository()
-    const response = await dbUser.getByUsername(username)
+    const response = await UserRepository.getByUsername(username)
     res.send(response)
   }
 
@@ -39,15 +35,14 @@ export class UserController {
     const { username, name, email } = req.body
     const { id_user } = req.params
 
-    const dbUser = new UserRepository()
-    const userInDb = await dbUser.getById(id_user)
+    const userInDb = await UserRepository.getById(id_user)
     if (!userInDb) {
       res.status(404).send({ message: 'User not found' })
       return
     }
 
     // verify if username is already taken
-    const userTaken = await dbUser.getByUsername(username)
+    const userTaken = await UserRepository.getByUsername(username)
     if (userTaken) {
       res.status(400).send({ message: 'Username already taken' })
       return
@@ -59,7 +54,7 @@ export class UserController {
       email: email || userInDb.email
     }
 
-    const response = await dbUser.updateById(id_user, updatedUser)
+    const response = await UserRepository.updateById(id_user, updatedUser)
 
     if (response.changes === 0) {
       res.status(500).send({ message: 'Failed to update user' })
