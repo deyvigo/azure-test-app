@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const dbName = process.env.DATABASE_DEV
+const dbName = process.env.DATABASE_TEST
 const dbPath = resolve(__dirname, './../../', dbName!)
 
 export const db = new Database(dbPath)
