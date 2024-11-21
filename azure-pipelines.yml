@@ -36,9 +36,10 @@ steps:
       git config --global user.name "deyvigo"
       git config --global user.email "deyvi.gomez@unmsm.edu.pe"
       git remote remove github || true
-      git checkout -b tests
-      git pull
       git remote add github https://deyvigo:$(GITHUB_TOKEN)@github.com/deyvigo/azure-test-app.git
+      git fetch
+      git pull
+      git checkout -b tests
       git push github tests
   env:
     GITHUB_TOKEN: $(GITHUB_TOKEN)
