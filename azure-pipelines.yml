@@ -26,3 +26,15 @@ steps:
     testResultsFiles: '**/test-reports/*.xml'
     failOnBadExitCode: true
   displayName: 'Publicar resultados de pruebas'
+
+- task: Bash@3
+  condition: succeeded()
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Los test pasaron"
+      git config --global user.name "deyvigo"
+      git config --global user.email "deyvi.gomez@unmsm.edu.pe"
+      git remote add github https://deyvigo:$(GITHUB_TOKEN)@github.com/deyvigo/azure-test-app.git
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
