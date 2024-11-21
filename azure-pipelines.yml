@@ -4,7 +4,7 @@ trigger:
       - tests
 
 pool:
-  name:  'Default'
+  name:  'Test'
 
 steps:
 - task: NodeTool@0
