@@ -130,9 +130,9 @@ describe('UserController get by username test', () => {
 
 describe('TEST EXAMPLES', () => {
   it('sum two numbers', async () => {
-    const numberOne = 5
+    const numberOne = 7
     const numberTwo = 7
 
-    expect(numberOne + numberTwo).toBe(12)
+    expect(numberOne + numberTwo).toBe(14)
   })
 })
