@@ -35,19 +35,23 @@ steps:
       echo "Los test pasaron"
       git config --global user.name "deyvigo"
       git config --global user.email "deyvi.gomez@unmsm.edu.pe"
-      
-      # Configurar remoto para GitHub
+
+      # Agregar remoto para GitHub
       git remote remove github || true
       git remote add github https://deyvigo:$(GITHUB_TOKEN)@github.com/deyvigo/azure-test-app.git
 
-      # Traer cambios del remoto
+      # Traer los últimos cambios del remoto y fusionarlos
       git fetch github
-      git pull github tests || true
+      git pull github tests --rebase || git pull github tests --no-rebase || true
 
-      # Cambiar a la rama tests (sin crearla si ya existe)
+      # Asegurarse de que estamos en la rama correcta
       git checkout tests || git checkout -b tests
 
-      # Hacer push
+      # Agregar y hacer commit de los cambios locales
+      git add .
+      git commit -m "Sync local branch with remote"
+
+      # Forzar el push para sincronizar con el remoto
       git push github tests --force-with-lease
   env:
     GITHUB_TOKEN: $(GITHUB_TOKEN)
