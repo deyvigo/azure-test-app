@@ -36,5 +36,5 @@ steps:
       git config --global user.name "deyvigo"
       git config --global user.email "deyvi.gomez@unmsm.edu.pe"
       git remote add github https://deyvigo:$(GITHUB_TOKEN)@github.com/deyvigo/azure-test-app.git
-    env:
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
