@@ -35,11 +35,19 @@ steps:
       echo "Los test pasaron"
       git config --global user.name "deyvigo"
       git config --global user.email "deyvi.gomez@unmsm.edu.pe"
+      
+      # Configurar remoto para GitHub
       git remote remove github || true
       git remote add github https://deyvigo:$(GITHUB_TOKEN)@github.com/deyvigo/azure-test-app.git
-      git fetch
-      git pull
-      git checkout -b tests
-      git push github tests
+
+      # Traer cambios del remoto
+      git fetch github
+      git pull github tests || true
+
+      # Cambiar a la rama tests (sin crearla si ya existe)
+      git checkout tests || git checkout -b tests
+
+      # Hacer push
+      git push github tests --force-with-lease
   env:
     GITHUB_TOKEN: $(GITHUB_TOKEN)
